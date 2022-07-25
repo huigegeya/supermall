@@ -190,7 +190,8 @@ export default {
 
         // 2.将商品添加到购物车里
         // this.$store.carList.push(product)
-        this.$store.commit('addCar',product)
+        this.$store.dispatch('addCar',product)
+       
     }
   },
 }

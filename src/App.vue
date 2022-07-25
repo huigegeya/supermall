@@ -61,7 +61,10 @@ import MainTabBar from 'components/content/maintabbar/MainTabBar.vue'
           5.3.11.3 监听滚动,动态的改变tabControl的值
       5.3.12 让Home保持原来的状态
           5.3.12.1 keep-alive让Home不要destroy()掉
-          5.3.12.2 离开时保存一个saveY 进来时将位置设成saveY-->
+          5.3.12.2 离开时保存一个saveY 进来时将位置设成saveY
+      5.3.13 mapGetters
+          5.3.13.1 mapGetters是vuex里的一个辅助函数
+          5.3.13.2 mapGetters可以把vuex中getters的方法变成computed计算属性-->
    
 
    <!-- 注意：
@@ -77,7 +80,11 @@ import MainTabBar from 'components/content/maintabbar/MainTabBar.vue'
    10. 防抖和设置变量:防抖是一直需要执行采用 设置变量是后面几次可以不执行才用 
    11.一般需要请求的数据过多时 需要用类（类中有构造函数）去进行封装 然后在面向这一个对象就行
    12.非父子组件的通信涉及到事件总线 Vue.protoType.$bus=new Vue() this.$bus.emit('xxx',)  this.$bus.on('xxx')
-   13.filters与方法的区别 vue 对数据提供一个 filter 的处理器，用以在不改变data 的情况下 输出前端需要的数据格式。-->
+   13.filters与方法的区别 vue 对数据提供一个 filter 的处理器，用以在不改变data 的情况下 输出前端需要的数据格式。
+   14.find() 方法返回通过测试（函数内判断）的数组的第一个元素的值。
+   15.JS for in 循环是为遍历对象而创建的，虽然也可以遍历数组，但是并不推荐，若要遍历数组，可以使用 for 循环或者 for of 循环
+      for in遍历index    for of遍历的是item
+   16.给组件添加事件（例如点击事件）需要.native-->
 
     <!-- 根据id请求详情数据
     1.先请求所有的数据拿到所有的id
