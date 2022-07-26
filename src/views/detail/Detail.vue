@@ -5,11 +5,6 @@
             ref="scroll" 
             @scroll="contentScroll"
             :probe-type="3">
-      <ul>
-        <li v-for="item in $store.state.carList">
-          {{item}}
-        </li>
-      </ul>
       <detail-swiper :topImages="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <DetailShopInfo :shop="shop"/>
@@ -20,6 +15,7 @@
     </scroll>
     <detail-bottom-bar @addToCar="addToCar"></detail-bottom-bar>
     <back-top @click.native="backClick" v-show="isBackTopShow"></back-top>
+    <!-- <toast :message="message" :isShow="isShow"></toast> -->
   </div>
 </template>
 
@@ -35,10 +31,14 @@ import DetailBottomBar from './childComps/DetailBottomBar.vue'
 
 import GoodsList from 'components/content/goods/GoodsList.vue'
 import Scroll from '@/components/common/scroll/Scroll.vue'
+// import Toast from '@/components/common/toast/Toast.vue'
+
 import { debounce } from '@/common/utils'
 import {itemListenerMixin,backTopMixin} from 'common/mixin'
 import { getDetail,getRecommend,Goods,Shop,GoodsParam
 } from '@/network/detail'
+import { mapActions } from 'vuex'
+
 
 
 export default {
@@ -53,6 +53,7 @@ export default {
     GoodsList,
     Scroll,
     DetailBottomBar,
+    // Toast,
   },
     name:'Detail',
   mixins:[itemListenerMixin,backTopMixin],
@@ -70,7 +71,9 @@ export default {
         themeTopY:[],
         getThemeTopY:null,
         positionY:null,
-        currentIndex:0
+        currentIndex:0,
+        // isShow:false,
+        // message:''
     }
   },
   created(){
@@ -144,6 +147,7 @@ export default {
     this.$bus.$off('itemImageLoad',this.itemImgListener)
   },
   methods: {
+    ...mapActions(['addCar']),
     imageLoad(){
       //refresh刷新 把图片加载出来重新计算高度 防止下滑过程卡顿
       // this.$refs.scroll.refresh()
@@ -151,7 +155,7 @@ export default {
       this.getThemeTopY()
     },
     titleClick(index){
-      this.$refs.scroll.scrollTo(0,-this.themeTopY[index])
+      this.$refs.scroll.scrollTo(0,-this.themeTopY[index],0)
       console.log(this.themeTopY[index]);
     },
     contentScroll(position){
@@ -171,7 +175,7 @@ export default {
       // 方案二 hacker
       this.positionY=-position.y
       for(let i=0;i<this.themeTopY.length-1;i++){
-        if(this.currentIndex!==i&&(this.positionY>this.themeTopY[i]&&this.positionY<this.themeTopY[i+1])){
+        if(this.currentIndex!==i&&(this.positionY>=this.themeTopY[i]&&this.positionY<this.themeTopY[i+1])){
           this.currentIndex=i
           this.$refs.nav.currentIndex=this.currentIndex
         }
@@ -190,8 +194,22 @@ export default {
 
         // 2.将商品添加到购物车里
         // this.$store.carList.push(product)
-        this.$store.dispatch('addCar',product)
-       
+        // this.$store.dispatch('addCar',product).then(res=>console.log(res))
+
+      // 方法一 ...mapActions 未封装
+       this.addCar(product).then(res=>{
+      //     this.isShow=true;
+      //     this.message=res;
+
+      //     setTimeout(()=>{
+      //       this.isShow=false
+      //       this.message=''
+      //     },2000)
+      //  })
+
+        // 方法二 插件方式的封装
+        this.$toast.show(res,2000)
+       })
     }
   },
 }

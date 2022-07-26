@@ -62,9 +62,16 @@ import MainTabBar from 'components/content/maintabbar/MainTabBar.vue'
       5.3.12 让Home保持原来的状态
           5.3.12.1 keep-alive让Home不要destroy()掉
           5.3.12.2 离开时保存一个saveY 进来时将位置设成saveY
-      5.3.13 mapGetters
-          5.3.13.1 mapGetters是vuex里的一个辅助函数
-          5.3.13.2 mapGetters可以把vuex中getters的方法变成computed计算属性-->
+    6.mapGetters
+        6.1 mapGetters是vuex里的一个辅助函数
+        6.2 mapGetters可以把vuex中getters的方法变成computed计算属性
+    7.解决移动端300ms延迟
+        7.1 npm i fastclick -s
+        7.2 fastclick.attach(document.body)
+    8.懒加载
+        8.1 npm i vue-lazyload -s
+        8.2 Vue.use(VueLazyload, {loading: require()})
+        8.3 require与import差不多 导入本地图片-->
    
 
    <!-- 注意：
@@ -84,7 +91,9 @@ import MainTabBar from 'components/content/maintabbar/MainTabBar.vue'
    14.find() 方法返回通过测试（函数内判断）的数组的第一个元素的值。
    15.JS for in 循环是为遍历对象而创建的，虽然也可以遍历数组，但是并不推荐，若要遍历数组，可以使用 for 循环或者 for of 循环
       for in遍历index    for of遍历的是item
-   16.给组件添加事件（例如点击事件）需要.native-->
+   16.给组件添加事件（例如点击事件）需要.native
+   17.getMappers getActions传递过来的事件需要加引号''
+   18.appendChild() 方法可向节点的子节点列表的末尾添加新的子节点。-->
 
     <!-- 根据id请求详情数据
     1.先请求所有的数据拿到所有的id
